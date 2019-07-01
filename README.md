@@ -163,10 +163,6 @@ python cnn_roc_plot.py
 ### Author
 * **Filippo Arcadu** - January 2018
 
-<br>
-
-###  Contributors
-* **Andreas Maunz**
 
 <br>
 
