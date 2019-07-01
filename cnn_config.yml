@@ -1,0 +1,350 @@
+#########################################
+#########################################
+###                                   ###
+###               MODEL               ###
+###                                   ###
+#########################################
+#########################################
+
+model:
+    # Task: either 'classification' or 'regression'
+    task: 'classification' 
+
+    # Specify mode: 'learning' , 'transfer-learning' , 'fine-tuning'
+    # 'learning'               ---> learn model from scratch
+    # 'transfer-learning'      ---> transfer-learning
+    # 'fine-tuning'            ---> transfer-learning + fine-tuning
+    # 're-training'            ---> stepwise fine-tuning of a pre-trained model
+    mode: 're-training'
+    
+    # Type of convolutional neural network.
+    # If you want a Keras built-in model, select among these models: vgg16, vgg19, inception-v3, inception-resnet-v2, xception,
+    # resnet50, mobilenet, mobilenet-v2, densenet-121, densenet-169, densenet-201, 
+    # nasnet, nasnet-mobile.
+    # If you want, instead, to use a customized model specify file to import and model name: 'path_to_model/model_custom.py:MyCNN'
+    model: 'mobilenet-v2'
+    
+    # Validation metric to save best model. For classification, choose among: accuracy, precision, recall, f1score, auc, cohen_kappa. For regression, choose among: r2 or mse.
+    metric: 'auc'
+    
+    # Loss choose between categorical cross-entropy ( 'categorical_crossentropy' ) or weighted categorical cross-entropy ( 'wcce' )
+    loss: 'categorical_crossentropy'
+   
+    # Number of epochs for learning, transfer-learning
+    num_epochs: 2
+
+    # Number of nodes forming the last dense layer
+    num_nodes_dense: 256
+    
+    # Batch size for both transfer learning and fine tuning
+    batch_size: 16
+
+    # Optimizer type for learning, transfer-learning and re-training
+    optimizer_type: Adam
+    
+    # Specify class weights. E.g., if you have 2 classes and you want the first one to be considered
+    # 4 times the second one write: class_weight = '{0:4.0,1:1.0}'. Remember that numbers are associated
+    # to classes according to the alphabetical ordering of the corresponding directories.
+    # The class weights are automatically computed inside cnn_class.py, so you can set this option to "None".
+    class_weight: None
+    
+    # Specify WCCE weights
+    # prediction: 'A', actual: 'B' 2 times more costly than the other way around: class_weight = [[1.0,1.0],[2.0,1.0]]
+    # prediction: 'B', actual: 'A' 2 times more costly than the other way around: class_weight = [[1.0,2.0],[1.0,1.0]]
+    # Remember that numbers are associated to classes according to the alphabetical ordering of the corresponding directories
+    # Default if left empty: [[1.0,1.0],[1.0,1.0]]
+    wcce_weight: None
+    
+    # Specify non-Imagenet weights to use for transfer-learning
+    # If None and the mode is transfer learning, the Imagenet weights will be loaded.
+    # If, instead, you want to use different weights than the Imagenet ones, just type
+    # the path to the weights, e.g. '/path/my_weights.h5'
+    weights_start: /pstore/data/pio/Tasks/PIO-421_models_for_TL/dl/outputs/mobilenet/cnn_model_mobilenet-v2_kaggle-mobile_20181222-105328_183819766882512664467701061107182003852.h5
+        
+
+
+#########################################
+#########################################
+###                                   ###
+###              FINE TUNING          ###
+###                                   ###
+#########################################
+#########################################
+
+fine_tuning:
+    # Number of epochs for fine tuning
+    num_epochs_ft: 2
+
+    # Number of layers to freeze during fine tuning
+    num_layers_freeze_ft: 100 
+
+    # Type of optimizer ( SGD , RMSprop , Adagrad , Adadelta , Adam , Adamax , Nadam )
+    optimizer_type_ft: 'Adam' 
+    
+    
+ 
+#########################################
+#########################################
+###                                   ###
+###             RE-TRAINING           ###
+###                                   ###
+#########################################
+#########################################
+
+re_training:
+    # Number of steps
+    num_steps_rt: 3
+
+    # Number of epochs for fine tuning
+    num_epochs_rt: 5
+
+    # Number of layers to freeze during fine tuning
+    num_layers_unfreeze_rt: 10  
+
+
+
+#########################################
+#########################################
+###                                   ###
+###         GENERAL OPTIMIZER         ###
+###             VALID FOR             ###
+###       LEARNING FROM SCRATCH ,     ###
+###          TRANSFER LEARNING ,      ###
+###             RE-TRAINING           ###
+###                                   ###
+#########################################
+#########################################
+
+optimizer:
+    # Parameters of the SGD
+    param_sgd:
+       # Learning rate, to be >= 0
+       learning_rate: 1.0e-4
+      
+       # Momentum, to be >= 0
+       momentum: 0.9
+       
+       # Decay, to be >= 0
+       decay: 0.0
+       
+       # Enable Nesterov, to be True or False
+       nesterov: True
+       
+    
+    # Parameters RMSprop
+    param_rmsprop:
+       # Learning rate, to be >= 0
+       learning_rate: 1.0e-4
+
+       # Rho, to be >= 0
+       rho: 0.9
+       
+       # Epsilon
+       epsilon: 1.0e-8
+       
+       # Decay
+       decay: 0.0
+       
+       
+    # Parameters Adagrad (recommended to leave the parameters at their default values)
+    param_adagrad:
+       # Learning rate, to be >= 0
+       learning_rate: 1.0e-2        
+       
+       # Epsilon
+       epsilon: 1.0e-8
+       
+       # Decay
+       decay: 0.0
+       
+       
+    # Param Adadelta (recommended to leave the parameters at their default values)
+    param_adadelta:
+       # Learning rate, to be >= 0
+       learning_rate: 1.0
+
+       # Rho
+       rho: 0.95
+       
+       # Epsilon
+       epsilon: 1.0e-8
+       
+       # Decay
+       decay: 1.0e-8
+       
+       
+    # Param Adam (default parameters are those provided in the roiginal paper)
+    param_adam:
+       # Learning rate, to be >= 0
+       learning_rate: 1.0e-3
+       
+       # Beta 1, to be in (0,1), generally close to 1
+       beta_1: 0.9
+       
+       # Beta 2, to be in (0,1), generally close to 1
+       beta_2: 0.999
+       
+       # Epsilon, fuzz factor
+       epsilon: 1.0e-8
+       
+       # Decay, to be >=0
+       decay: 0.0
+       
+       
+    # Param Adamax
+    param_adamax:
+       # Learning rate, to be >= 0
+       learning_rate: 1.0e-2
+
+       # Beta 1, to be in (0,1), generally close to 1
+       beta_1: 0.9
+       
+       # Beta 2, to be in (0,1), generally close to 1
+       beta_2: 0.999
+       
+       # Epsilon, fuzz factor
+       epsilon: 1.0e-8
+
+       # Decay, learning decay over each update
+       decay: 0.0
+       
+       
+    # Param Adamax
+    param_nadam:
+       # Learning rate, to be >= 0
+       learning_rate: 2.0e-3
+
+       # Beta 1, to be in (0,1), generally close to 1
+       beta_1: 0.9
+       
+       # Beta 2, to be in (0,1), generally close to 1
+       beta_2: 0.999
+       
+       # Epsilon, fuzz factor
+       epsilon: 1.0e-8
+
+       # Decay, learning decay over each update
+       schedule_decay: 4e-3
+       
+       
+       
+       
+#########################################
+#########################################
+###                                   ###
+###        OPTIMIZER FINE TUNING      ###
+###                                   ###
+#########################################
+#########################################
+
+optimizer_fine_tuning:   
+    # Parameters of the SGD
+    param_sgd:
+       # Learning rate, to be >= 0
+       learning_rate: 3e-4
+      
+       # Momentum, to be >= 0
+       momentum: 0.9
+       
+       # Decay, to be >= 0
+       decay: 0.2
+       
+       # Enable Nesterov, to be True or False
+       nesterov: True
+       
+    
+    # Parameters RMSprop
+    param_rmsprop:
+       # Learning rate, to be >= 0
+       learning_rate: 1e-3
+
+       # Rho, to be >= 0
+       rho: 0.9
+       
+       # Epsilon
+       epsilon: 1e-8
+       
+       # Decay
+       decay: 0.0
+       
+       
+    # Parameters Adagrad (recommended to leave the parameters at their default values)
+    param_adagrad:
+       # Learning rate, to be >= 0
+       learning_rate: 1e-2        
+       
+       # Epsilon
+       epsilon: 1e-8
+       
+       # Decay
+       decay: 0.0
+       
+       
+    # Param Adadelta (recommended to leave the parameters at their default values)
+    param_adadelta:
+       # Learning rate, to be >= 0
+       learning_rate: 1.0
+
+       # Rho
+       rho: 0.95
+       
+       # Epsilon
+       epsilon: 1e-8
+       
+       # Decay
+       decay: 1e-8
+       
+       
+    # Param Adam (default parameters are those provided in the roiginal paper)
+    param_adam:
+       # Learning rate, to be >= 0
+       learning_rate: 1.0e-3
+       
+       # Beta 1, to be in (0,1), generally close to 1
+       beta_1: 0.9
+       
+       # Beta 2, to be in (0,1), generally close to 1
+       beta_2: 0.999
+       
+       # Epsilon, fuzz factor
+       epsilon: 1e-8
+       
+       # Decay, to be >=0
+       decay: 0.0
+       
+       
+    # Param Adamax
+    param_adamax:
+       # Learning rate, to be >= 0
+       learning_rate: 1.0e-2
+
+       # Beta 1, to be in (0,1), generally close to 1
+       beta_1: 0.9
+       
+       # Beta 2, to be in (0,1), generally close to 1
+       beta_2: 0.999
+       
+       # Epsilon, fuzz factor
+       epsilon: 1e-8
+
+       # Decay, learning decay over each update
+       decay: 0.0
+       
+       
+    # Param Adamax
+    param_nadam:
+       # Learning rate, to be >= 0
+       learning_rate: 2.0e-3
+
+       # Beta 1, to be in (0,1), generally close to 1
+       beta_1: 0.9
+       
+       # Beta 2, to be in (0,1), generally close to 1
+       beta_2: 0.999
+       
+       # Epsilon, fuzz factor
+       epsilon: 1.0e-8
+
+       # Decay, learning decay over each update
+       schedule_decay: 4e-3
+

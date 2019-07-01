@@ -1,0 +1,229 @@
+#########################################
+#########################################
+###                                   ###
+###     TRANSFORMATIONS FOR IMGAUG    ###
+###                                   ###
+#########################################
+#########################################
+
+
+##  General setting
+general:
+    ##  Number of samples to generate
+    num_samples: 50000
+    
+    ##  Extension for output files
+    ext_out: .png
+    
+    ##  Class weights (in alphabetical order)
+    class_weights: '1.41:1.0'
+    
+
+##  Crop image
+crop:
+    ##  Enable / disable
+    enable: False
+    
+    ##  Probability
+    prob: 0.7
+    
+    ##  Crop image by -x1% to x2% of their height/width
+    range: '-0.05:0.1'
+    
+    
+    
+##  Horizontal flip
+flip_lr:
+    ##  Enable / disable
+    enable: True
+    
+    ##  Probability
+    prob: 0.9
+
+
+
+##  Vertical flip
+flip_ud:
+    ##  Enable / disable
+    enable: False
+    
+    ##  Probability
+    prob: 0.9
+    
+    
+
+##  Scaling
+scaling:
+    ##  Enable / disable
+    enable: True
+    
+    ##  Probability
+    prob: 0.7
+    
+    ##  Scale images to x1-x2% of their size, individually per axis
+    range: '0.8:1.2;0.8:1.2'
+    
+    
+##  Translating
+translation:
+    ##  Enable / disable
+    enable: True
+    
+    ##  Probability
+    prob: 0.8
+
+    ##  Translate by -x1% to +x2% per axis
+    range: '-0.2:0.2;-0.2:0.2'
+    
+
+##  Rotation
+rotation:
+    ##  Enable / disable
+    enable: True
+    
+    ##  Probability
+    prob: 0.6
+    
+    ##  Rotation by -45 to +45 degrees
+    range: '-40:40'
+
+    
+##  Shear
+shear:
+    ##  Enable / disable
+    enable: False
+    
+    ##  Probability
+    prob: 0.1
+    
+    ##  Shear by -16 to + 16 degrees
+    range: '-16:16'
+    
+   
+##  Contrast normalization
+elastic_transformation:
+    ##  Enable / disable
+    enable: False
+    
+    ##  Probability
+    prob: 0.3
+    
+    ##  Alpha
+    alpha: '0.5:3.5'
+    
+    ##  Sigma
+    range: 0.25
+
+    
+##  Gaussian blurring
+gaussian_blur:
+    ##  Enable / disable
+    enable: True
+    
+    ##  Probability
+    prob: 0.3
+    
+    ##  Sigma range
+    range: '0.0:3.0'
+    
+    
+##  Average blurring
+average_blur:
+    ##  Enable / disable
+    enable: True
+    
+    ##  Probability
+    prob: 0.3
+    
+    ##  Kernel size range
+    range: '2:7'
+    
+    
+##  Median blurring
+median_blur:
+    ##  Enable / disable
+    enable: False
+    
+    ##  Probability
+    prob: 0.3
+    
+    ##  Kernel size range
+    range: '3:11'
+
+
+##  Sharpen
+sharpen:
+    ##  Enable / disable
+    enable: False
+    
+    ##  Probability
+    prob: 0.3
+    
+    ##  Alpha
+    alpha: '0:1.0'
+    
+    ##  Lightness
+    range: '0.75:1.5'
+
+    
+##  Emboss
+emboss:
+    ##  Enable / disable
+    enable: False
+    
+    ##  Probability
+    prob: 0.3
+    
+    ##  Alpha
+    alpha: '0:1.0'
+    
+    ##  Strength
+    range: '0.0:2.0'
+    
+    
+##  Dropout
+dropout:
+    ##  Enable / disable
+    enable: False
+    
+    ##  Probability
+    prob: 0.3
+    
+    ##  Remove pixels from x1% up to x2%
+    range: '0.01:0.1'
+    
+    
+##  Change brightness
+brightness:
+    ##  Enable / disable
+    enable: True
+    
+    ##  Probability
+    prob: 0.3
+    
+    ##  Range of values from -x1 to +x2 
+    range: '-10:10'
+    
+    
+##  Change hue and saturation
+hue_and_saturation:
+    ##  Enable / disable
+    enable: True
+    
+    ##  Probability
+    prob: 0.3
+    
+    ##  Range of values regarding the whole image or a crop of it
+    range: '-20:20'
+    
+    
+##  Contrast normalization
+contrast_normalization:
+    ##  Enable / disable
+    enable: True
+    
+    ##  Probability
+    prob: 0.3
+    
+    ##  Range
+    range: '0.5:2.0'

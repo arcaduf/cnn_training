@@ -1,0 +1,56 @@
+# Config file for running forward DL predictions
+#
+# Author: Filippo Arcadu 
+#         AIM4EYE Project
+#         24/07/2018
+
+
+
+# =============================================================================
+# Area related to the input data
+# =============================================================================
+
+input:
+    # Specify folder with input images or list of folders [,..]
+    folder: None
+    
+    # Specify input CSV / CSVs
+    csv: /pstore/data/pio/Tasks/PIO-399/original_tables/holdout_anchor_harbor_marina_cf_20180927_a_imglinks.csv
+    
+    # Specify column of the CSV with the filenames
+    csv_col: full_fname_png
+    
+    
+
+# =============================================================================
+# Area related to mode
+# =============================================================================
+
+mode:
+    # Specify whether to compute bottleneck features or not
+    bottleneck: False
+    
+    # Specify architecture
+    arch: inception-v3
+    
+
+    
+# =============================================================================
+# Area related to the output data
+# =============================================================================   
+
+output:
+    path: /pstore/data/pio/Tasks/PIO-399/dl/predictions/preds_holdout_anchor_harbor_marina_cf_20180927_cfva_cq0_marina_sf_20180920_a_unfrozen.643-6.466-289.803/
+
+    
+  
+# =============================================================================
+# Area related to the DL models
+# =============================================================================
+  
+model:
+    # Specify path / paths where to find the models
+    path: /pstore/data/pio/Tasks/PIO-399/dl/outputs/
+    
+    # Specify hash / hashes
+    hash: 643-6.466-289.803
